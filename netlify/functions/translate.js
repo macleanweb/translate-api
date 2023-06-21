@@ -1,5 +1,5 @@
 exports.handler = async function(event, context) {
-  console.log(body, context);
+  console.log(event, context);
   try {
     const { text, targetLanguage } = JSON.parse(event.body);
     const API_KEY = process.env.DEEPL_API_KEY;
