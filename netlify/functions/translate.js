@@ -1,13 +1,21 @@
-import * as deepl from 'deepl-node';
+const deepl = require('deepl-node');
+const handlePreflightRequest = require('../utils/handlePreflightRequest');
 
-exports.handler = async function(event, context) {
-  console.log(event, context);
+exports.handler = async function(event) {
+  // Check if it's a preflight request
+  if (event.httpMethod === 'OPTIONS') {
+    handlePreflightRequest();
+  }
+
   try {
-    const payload = JSON.parse(event.body);
-    console.log(payload);
-    const API_KEY = process.env.DEEPL_API_KEY;
-    const translator = new deepl.Translator(API_KEY);
-    const data = await translator.translate(payload.text, payload.targetLanguage);
+    const {
+      apiKey,
+      text, 
+      targetLanguage, 
+      options = {}
+    } = JSON.parse(event.body);
+    const translator = new deepl.Translator(apiKey);
+    const data = await translator.translateText(text, null, targetLanguage, options);
 
     return {
       statusCode: 200,
