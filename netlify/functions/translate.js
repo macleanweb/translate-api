@@ -5,23 +5,9 @@ exports.handler = async function(event, context) {
   try {
     const payload = JSON.parse(event.body);
     console.log(payload);
-    // const API_KEY = process.env.DEEPL_API_KEY;
-    // const urlSearchParams = new URLSearchParams();
-
-    // Object.keys(payload).forEach(key => {
-    //     urlSearchParams.append(key, payload[key]);
-    // });
-
-    // const urlEncodedBody = urlSearchParams.toString();
-    // const url = `https://api-free.deepl.com/v2/translate?auth_key=${API_KEY}&${urlEncodedBody}`;
-
-    // const response = await fetch(url);
-
-    // if (!response.ok) {
-    //   throw new Error('Translation request failed');
-    // }
-
-    // const data = await response.json();
+    const API_KEY = process.env.DEEPL_API_KEY;
+    const translator = new deepl.Translator(API_KEY);
+    const data = await translator.translate(payload.text, payload.targetLanguage);
 
     return {
       statusCode: 200,
