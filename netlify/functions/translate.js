@@ -4,7 +4,7 @@ const handlePreflightRequest = require('../utils/handlePreflightRequest');
 exports.handler = async function(event) {
   // Check if it's a preflight request
   if (event.httpMethod === 'OPTIONS') {
-    handlePreflightRequest();
+    return handlePreflightRequest.handler();
   }
 
   try {
